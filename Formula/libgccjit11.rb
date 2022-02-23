@@ -29,6 +29,7 @@ class Libgccjit11 < Formula
       --disable-nls
       --enable-checking=release
       --with-gcc-major-version-only
+      --disable-multilib
       --with-gmp=#{Formula["gmp"].opt_prefix}
       --with-mpfr=#{Formula["mpfr"].opt_prefix}
       --with-mpc=#{Formula["libmpc"].opt_prefix}
