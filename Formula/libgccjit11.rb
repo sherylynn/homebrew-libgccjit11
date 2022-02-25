@@ -9,7 +9,7 @@ class Libgccjit11 < Formula
   depends_on "gmp"
   depends_on "flex"
   depends_on "autoconf"
-  depends_on "textinfo"
+  depends_on "texinfo"
   depends_on "binutils"
   depends_on "isl"
   depends_on "libmpc"
@@ -30,7 +30,7 @@ class Libgccjit11 < Formula
     args = %W[
       --prefix=#{prefix}
       --libdir=#{lib}/gcc/#{version.major}
-      --disable-nls
+      --disable-bootstraps
       --enable-checking=release
       --with-gcc-major-version-only
       --disable-multilib
@@ -43,10 +43,9 @@ class Libgccjit11 < Formula
 
 
     # Building jit needs --enable-host-shared, which slows down the compiler.
-    make_args = ["BOOT_LDFLAGS=-Wl,-headerpad_max_install_names"]
     mkdir "build-jit" do
       system "../configure", *args, "--enable-languages=jit", "--enable-host-shared"
-      system "make", *make_args
+      system "make"
       system "make", "install"
     end
 
