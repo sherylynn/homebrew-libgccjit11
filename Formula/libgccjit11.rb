@@ -5,6 +5,13 @@ class Libgccjit11 < Formula
   url "https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-"+version+".tar.gz"
   sha256 "5efe343a97e95fe9031aa23e103755ec3bc56855c865c4b6ffcbad6c25675514"
   license "GPL-3.0-or-later"
+  
+  bottle do                                                                                                                                                                                    
+    root_url "https://github.com/sherylynn/homebrew-libgccjit11/releases/download/v11.2.0"                                                                                                       
+    rebuild 1                                                                                                                                                                                  
+    sha256 cellar: :any, x86_64_linux: "655a35435c37d77a15db61b0d4f4236fbc141998f271ef38dd3a9bc7e584e0df"                                                                                      
+ end       
+
   depends_on "gcc" => :test
   depends_on "gmp"
   depends_on "flex"
@@ -15,7 +22,6 @@ class Libgccjit11 < Formula
   depends_on "libmpc"
   depends_on "mpfr"
   depends_on "zlib"
-
 
   # GCC bootstraps itself, so it is OK to have an incompatible C++ stdlib
   cxxstdlib_check :skip
@@ -45,6 +51,8 @@ class Libgccjit11 < Formula
     # Building jit needs --enable-host-shared, which slows down the compiler.
     mkdir "build-jit" do
       system "../configure", *args, "--enable-languages=jit", "--enable-host-shared"
+      #需要设置成单核编译在 ryzen上
+      #system "make -j 1"
       system "make"
       system "make", "install"
     end
